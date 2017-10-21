@@ -10,8 +10,63 @@ h1 {
 <body>
 <h1>chess</h1>
 <hr/>
+<div id="chess"></div>
 
 <script>
+// changable var
+var size = 40;
+
+// code
+var c = document.getElementById("chess");
+var canvas = document.createElement("canvas");
+var p = document.createElement("p");
+canvas.width = size*9;
+canvas.height = size*10;
+p.innerHTML = "message box";
+c.appendChild(canvas);
+c.appendChild(p);
+c.style.textAlign = "center";
+var cnt = canvas.getContext("2d");
+var chess = {
+	cnt:cnt,
+	p:p,
+	clear:function(){
+		this.cnt.clearRect(0,0,size*9,size*10);
+		this.cnt.beginPath();
+		this.cnt.lineHeight = size/20;
+		this.cnt.strokeStyle = "#999";
+		for (i=0; i<10; i++) {
+			this.cnt.moveTo(size/2,size/2+size*i);
+			this.cnt.lineTo(size*8+size/2,size/2+size*i);
+		}
+		for (i=0; i<9; i++) {
+			if (i==0 || i==8) {
+				this.cnt.moveTo(size/2+size*i,size/2);
+				this.cnt.lineTo(size/2+size*i,size*9+size/2);
+			} else {
+				this.cnt.moveTo(size/2+size*i,size/2);
+				this.cnt.lineTo(size/2+size*i,size*4+size/2);
+				this.cnt.moveTo(size/2+size*i,size*5+size/2);
+				this.cnt.lineTo(size/2+size*i,size*9+size/2);
+			}
+		}
+		this.cnt.moveTo(size/2+size*3, size/2)
+		this.cnt.lineTo(size/2+size*5, size/2+size*2);
+		this.cnt.moveTo(size/2+size*5, size/2);
+		this.cnt.lineTo(size/2+size*3, size/2+size*2);
+		this.cnt.moveTo(size/2+size*3, size/2+size*7)
+		this.cnt.lineTo(size/2+size*5, size/2+size*9);
+		this.cnt.moveTo(size/2+size*5, size/2+size*7)
+		this.cnt.lineTo(size/2+size*3, size/2+size*9);
+		this.cnt.stroke();
+		this.cnt.closePath();
+	}
+};
+chess.clear();
+canvas.onclick = function(e){
+	console.log(e.offsetX,e.offsetY);
+}
 </script>
+
 </body>
 </html>
